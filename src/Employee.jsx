@@ -5,6 +5,7 @@ export default function Employee(props) {
 
   return (
     <div>
+      <p>{employee.name.first}</p>
     </div>
   )
 }

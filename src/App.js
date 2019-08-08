@@ -12,13 +12,19 @@ export default class App extends Component {
       employees: []
     };
 
-    // pass these to appropriate child components so they can trigger state change here
+    //@TODO: pass these to appropriate child components so they can trigger state change here
     this.editEmployee = this.editEmployee.bind(this);
     this.addEmployee = this.addEmployee.bind(this);
   }
   
   componentDidMount() {
     // fetch employees and set to state.employees
+    fetch('https://randomuser.me/api/?results=30&inc=name,picture,email')
+    .then(response => response.json())
+    .then(data => {
+      //@TODO: modify data to give each employee index as id and some position
+      this.setState({ employees: data.results })
+    });
   }
 
   editEmployee(updatedEmployee) {
@@ -43,6 +49,7 @@ export default class App extends Component {
 
     return (
       <div>
+      <h1>Employee Directory</h1>
       <NewEmployee addEmployee={this.addEmployee}></NewEmployee>
       {/*LIST ALL EMPLOYEES*/}
       <ul>
