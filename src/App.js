@@ -19,10 +19,20 @@ export default class App extends Component {
   
   componentDidMount() {
     // fetch employees and set to state.employees
-    fetch('https://randomuser.me/api/?results=30&inc=name,picture,email')
+    fetch('https://randomuser.me/api/?results=30&nat=us&inc=name,picture,email')
     .then(response => response.json())
     .then(data => {
-      //@TODO: modify data to give each employee index as id and some position
+      let employees = data.results;
+
+      employees.forEach((emp, idx) => {
+        emp.id = ++idx;
+        if (emp.id === 1) emp.job = 'ceo';
+        else if (emp.id === 2) emp.job = 'cto';
+        else if (emp.id < 9) emp.job = 'project manager';
+        else if (emp.id < 15) emp.job = 'designer';
+        else emp.job = 'developer';
+      });
+
       this.setState({ employees: data.results })
     });
   }
