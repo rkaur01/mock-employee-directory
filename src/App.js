@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Employee from './Employee';
 import NewEmployee from './NewEmployee';
+import EditEmployee from './EditEmployee';
 import './App.css';
 
 export default class App extends Component {
@@ -67,6 +68,7 @@ export default class App extends Component {
               return (
                   <li key={employee.id}>
                       <Employee employee={employee}></Employee>
+                      <EditEmployee employee={employee} editEmployee={this.editEmployee}></EditEmployee>
                   </li>
               )
           })}
@@ -75,40 +77,3 @@ export default class App extends Component {
     );
   }
 }
-
-
-
-
-// <Router>
-// <div>
-//   <Switch>
-//     <Route exact path="/employees" component={EmployeeList} />  
-//     <Route exact path="/employees/addEmployee" component={NewEmployee} />                    
-//     <Route path="/employees/:employeeId" component={Employee} />
-//   </Switch>
-// </div>
-// </Router>
-// example of stateless components, cant use lifecycle hooks, save as js instead of jsx i think
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-
-//     </div>
-//   );
-// }
-
-// export default App;
