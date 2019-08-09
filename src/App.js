@@ -10,12 +10,15 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      employees: []
+      employees: [],
+      addEmployeeBtnClicked: false,
+      editEmployeeBtnClicked: false
     };
 
     //@TODO: pass these to appropriate child components so they can trigger state change here
     this.editEmployee = this.editEmployee.bind(this);
     this.addEmployee = this.addEmployee.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   
   componentDidMount() {
@@ -39,7 +42,7 @@ export default class App extends Component {
   }
 
   editEmployee(updatedEmployee) {
-    // find employee by updatedEmployee.id and set that object in state to updatedEmployeeData
+    // find employee by updatedEmployee.id and set that object in state to updatedEmployee data
     let employees = this.state.employees;
     const foundIndex = employees.findIndex(emp => emp.id === updatedEmployee.id);
     
@@ -55,20 +58,24 @@ export default class App extends Component {
     this.setState({ employees });
   }
 
+  handleClick(btnName) {
+    this.setState({[`${btnName}Clicked`]: true})
+  }
+
   render() {
-    const { employees } = this.state;
+    const { employees, addEmployeeBtnClicked, editEmployeeBtnClicked } = this.state;
 
     return (
       <div>
       <h1>Employee Directory</h1>
-      <NewEmployee addEmployee={this.addEmployee}></NewEmployee>
+      <NewEmployee addEmployeeBtnClicked={addEmployeeBtnClicked} handleClick={this.handleClick} addEmployee={this.addEmployee}></NewEmployee>
       {/*LIST ALL EMPLOYEES*/}
       <ul>
           {employees.map(employee => {
               return (
                   <li key={employee.id}>
                       <Employee employee={employee}></Employee>
-                      <EditEmployee employee={employee} editEmployee={this.editEmployee}></EditEmployee>
+                      <EditEmployee employee={employee} editEmployeeBtnClicked={editEmployeeBtnClicked} handleClick={this.handleClick} editEmployee={() => this.editEmployee(employee)}></EditEmployee>
                   </li>
               )
           })}
