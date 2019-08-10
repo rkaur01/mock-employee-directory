@@ -59,7 +59,7 @@ export default class App extends Component {
       name = {},
       job = '',
       email = '',
-      id = ++this.state.employees.length;
+      id = this.state.employees.length+1;
 
     name.first = newEmployee.firstName.value;
     name.last = newEmployee.lastName.value;
