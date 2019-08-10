@@ -47,15 +47,30 @@ export default class App extends Component {
     const foundIndex = employees.findIndex(emp => emp.id === updatedEmployee.id);
     
     employees[foundIndex] = updatedEmployee;
-    this.setState({ employees });
+    this.setState({
+      employees,
+      editEmployeeBtnClicked: false
+    });
   }
 
   addEmployee(newEmployee) {
     // push newEmployee object to state
-    let employees = this.state.employees;
+    let employees = this.state.employees,
+      name = {},
+      job = '',
+      email = '',
+      id = ++this.state.employees.length;
 
-    employees.push(newEmployee);
-    this.setState({ employees });
+    name.first = newEmployee.firstName.value;
+    name.last = newEmployee.lastName.value;
+    job = newEmployee.jobTitle.value;
+    email = newEmployee.email.value;
+
+    employees.push({name,job,email,id});
+    this.setState({
+      employees,
+      addEmployeeBtnClicked: false
+    });
   }
 
   handleClick(btnName) {
