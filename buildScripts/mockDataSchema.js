@@ -28,9 +28,13 @@ var schema = {
           "picture": {
             type: "string",
             "faker": "image.avatar"
+          },
+          "job": {
+            type: "string",
+            "faker": "name.jobTitle" 
           }
         },
-        "required": ["id", "type", "firstName", "lastName", "email"]
+        "required": ["id", "type", "firstName", "lastName", "email", "picture", "job"]
       }
     }
   },

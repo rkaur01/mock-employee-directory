@@ -11,6 +11,7 @@ export default class App extends Component {
 
     this.state = {
       employees: [],
+      staleData: false,
       addEmployeeBtnClicked: false,
       editEmployeeBtnClicked: false
     };
@@ -21,26 +22,34 @@ export default class App extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
   
-  componentDidMount() {
+  fetchData() {
     // fetch employees and set to state.employees
     fetch('http://localhost:3001/employees')
+    .then(this.handleErrors)
     .then(response => response.json())
     .then(data => {
       let employees = data;
-
-      console.log('WHAT IS DATA', data)
-
-      employees.forEach((emp, idx) => {
-        emp.id = ++idx;
-        if (idx === 1) emp.job = 'ceo';
-        else if (idx=== 2) emp.job = 'cto';
-        else if (idx < 9) emp.job = 'project manager';
-        else if (idx < 15) emp.job = 'designer';
-        else emp.job = 'developer';
-      });
-
+      
       this.setState({ employees })
-    });
+    })
+    .catch(error => console.log(error) );
+  }
+
+  handleErrors(response) {
+    if (!response.ok) {
+      throw Error(response.statusText);
+    }
+    return response;
+  }
+  
+  componentDidMount() {
+    this.fetchData()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.staleData !== prevState.staleData) {
+      this.fetchData()
+    }
   }
 
   editEmployee(updatedEmployee) {
@@ -57,22 +66,22 @@ export default class App extends Component {
 
   addEmployee(newEmployee) {
     // push newEmployee object to state
-    let employees = this.state.employees,
-      name = {},
-      job = '',
-      email = '',
-      id = this.state.employees.length+1;
+    let firstName = newEmployee.firstName.value,
+      lastName = newEmployee.lastName.value,
+      job = newEmployee.jobTitle.value,
+      email = newEmployee.email.value;
 
-    name.first = newEmployee.firstName.value;
-    name.last = newEmployee.lastName.value;
-    job = newEmployee.jobTitle.value;
-    email = newEmployee.email.value;
-
-    employees.push({name,job,email,id});
-    this.setState({
-      employees,
+    fetch('http://localhost:3001/employees', {
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      method: 'POST',
+      body: JSON.stringify({firstName,lastName,job,email})
+    })
+    .then(this.handleErrors)
+    .then(response => this.setState({
+      staleData: true,
       addEmployeeBtnClicked: false
-    });
+    }))
+    .catch(error => console.log(error) );
   }
 
   handleClick(btnName) {
@@ -86,7 +95,6 @@ export default class App extends Component {
       <div>
       <h1>Employee Directory</h1>
       <NewEmployee addEmployeeBtnClicked={addEmployeeBtnClicked} handleClick={this.handleClick} addEmployee={this.addEmployee}></NewEmployee>
-      {/*LIST ALL EMPLOYEES*/}
       <ul>
           {employees.map(employee => {
               return (
