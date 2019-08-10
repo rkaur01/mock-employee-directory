@@ -5,9 +5,9 @@ export default function Employee(props) {
 
   return (
     <div>
-      <img src={employee.picture && employee.picture.thumbnail} alt={`${employee.name.first} ${employee.name.last} thumbnail`}></img>
+      <img src={employee.picture} alt={`${employee.firstName} ${employee.lastName} thumbnail`}></img>
       <p>Employee Id: {employee.id}</p>
-      <p>{`${employee.name.first} ${employee.name.last}`}</p>
+      <p>{`${employee.firstName} ${employee.lastName}`}</p>
       <p>{employee.job}</p>
       <p>{employee.email}</p>
     </div>
