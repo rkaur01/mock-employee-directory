@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Employee from './Employee';
 import NewEmployee from './NewEmployee';
 import EditEmployee from './EditEmployee';
-import './App.css';
+import './App.scss';
 
 export default class App extends Component {
   
@@ -129,7 +129,7 @@ export default class App extends Component {
 
     return (
       <div>
-      <h1>Employee Directory</h1>
+      <h1 className="header">Employee Directory</h1>
       <NewEmployee addEmployeeBtnClicked={addEmployeeBtnClicked} handleClick={this.handleClick} addEmployee={this.addEmployee}></NewEmployee>
       <ul>
           {employees.map(employee => {
@@ -137,7 +137,7 @@ export default class App extends Component {
                   <li key={employee.id}>
                       <Employee employee={employee}></Employee>
                       <EditEmployee employee={employee} editEmployeeBtnClicked={editEmployeeBtnClicked} handleClick={this.handleClick} editEmployee={() => this.editEmployee(employee)}></EditEmployee>
-                      <button onClick={() => this.deleteEmployee(employee)}>Delete Employee</button>
+                      <button className="btn btn-delete" onClick={() => this.deleteEmployee(employee)}>Delete Employee</button>
                   </li>
               )
           })}

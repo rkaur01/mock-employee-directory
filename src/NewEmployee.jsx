@@ -41,7 +41,7 @@ export default function NewEmployee(props) {
 
         :
 
-        <button onClick={() => props.handleClick('addEmployeeBtn')}>Add Employee</button>
+        <button className="btn btn-add" onClick={() => props.handleClick('addEmployeeBtn')}>Add Employee</button>
       }
     </div>
   )

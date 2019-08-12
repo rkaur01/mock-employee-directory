@@ -1,0 +1,34 @@
+
+.header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.btn {
+  color: white;
+  font-weight: 800;
+  border-radius: 4px;
+  padding: 4px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add {
+  background: rgb(28, 184, 65);
+}
+
+.btn-delete {
+  background: rgb(202, 60, 60);
+}
+
+.employee-profile {
+  display: flex;
+}
+
+.employee-
