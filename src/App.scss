@@ -1,3 +1,6 @@
+@mixin tablet {
+  @media (min-width: 768px) { @content; }
+}
 
 .header {
   background-color: #282c34;
@@ -14,21 +17,55 @@
 .btn {
   color: white;
   font-weight: 800;
+  font-size: 16px;
   border-radius: 4px;
-  padding: 4px;
+  padding: 6px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+
+  &.btn-add {
+    background: rgb(28, 184, 65);
+    margin: 20px 25px;
+  }
+  
+  &.btn-delete {
+    background: rgb(202, 60, 60);
+  }
 }
 
-.btn-add {
-  background: rgb(28, 184, 65);
-}
 
-.btn-delete {
-  background: rgb(202, 60, 60);
-}
-
-.employee-profile {
+.employee-wrapper {
   display: flex;
-}
+  align-items:center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 20px 0px;
+  margin: 0px 25px;
+  border-bottom: 1px solid rgb(220,220,220);
+  @include tablet {
+    flex-wrap: nowrap;
+  }
 
-.employee-
+  .employee-profile {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    @include tablet {
+      width: 80%;
+      flex-wrap: nowrap;
+    }
+  
+    .employee-img {
+      width: 50%;
+      @include tablet {
+        width: 15%
+      }
+    }
+    .employee-info {
+      width: 100%;
+      @include tablet {
+        width: 70%;
+        padding-left: 20px;
+      }
+    }
+  }
+}

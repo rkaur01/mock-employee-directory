@@ -131,17 +131,16 @@ export default class App extends Component {
       <div>
       <h1 className="header">Employee Directory</h1>
       <NewEmployee addEmployeeBtnClicked={addEmployeeBtnClicked} handleClick={this.handleClick} addEmployee={this.addEmployee}></NewEmployee>
-      <ul>
-          {employees.map(employee => {
-              return (
-                  <li key={employee.id}>
-                      <Employee employee={employee}></Employee>
-                      <EditEmployee employee={employee} editEmployeeBtnClicked={editEmployeeBtnClicked} handleClick={this.handleClick} editEmployee={() => this.editEmployee(employee)}></EditEmployee>
-                      <button className="btn btn-delete" onClick={() => this.deleteEmployee(employee)}>Delete Employee</button>
-                  </li>
-              )
-          })}
-      </ul>
+      {employees.map(employee => {
+          return (
+              <div key={employee.id}
+                  className="employee-wrapper">
+                  <Employee employee={employee}></Employee>
+                  <EditEmployee employee={employee} editEmployeeBtnClicked={editEmployeeBtnClicked} handleClick={this.handleClick} editEmployee={() => this.editEmployee(employee)}></EditEmployee>
+                  <button className="btn btn-delete" onClick={() => this.deleteEmployee(employee)}>Delete Employee</button>
+              </div>
+          )
+      })}
     </div>
     );
   }
