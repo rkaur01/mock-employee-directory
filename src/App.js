@@ -19,6 +19,7 @@ export default class App extends Component {
     //@TODO: pass these to appropriate child components so they can trigger state change here
     this.editEmployee = this.editEmployee.bind(this);
     this.addEmployee = this.addEmployee.bind(this);
+    this.deleteEmployee = this.deleteEmployee.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
   
@@ -30,7 +31,10 @@ export default class App extends Component {
     .then(data => {
       let employees = data;
       
-      this.setState({ employees })
+      this.setState({ 
+        employees, 
+        staleData: false
+      })
     })
     .catch(error => console.log(error) );
   }
@@ -53,16 +57,32 @@ export default class App extends Component {
   }
 
   //@TODO: make edit and add DRY, differences are only in method, state btnClicked, and json passed in
-  editEmployee(updatedEmployee) {
+  //@TODO: complete method after developing form, may need onChange if using default val
+  editEmployee(oldEmployee, updatedEmployee) {
     let firstName = updatedEmployee.firstName.value,
       lastName = updatedEmployee.lastName.value,
       job = updatedEmployee.jobTitle.value,
-      email = updatedEmployee.email.value;
+      email = updatedEmployee.email.value,
+      updateData = {};
+
+    if (oldEmployee.firstName !== firstName) {
+      updateData.firstName = firstName
+    }
+    if (oldEmployee.lastName !== lastName) {
+      updateData.lastName = lastName
+    }
+    if (oldEmployee.job !== job) {
+      updateData.job = job
+    }
+    if (oldEmployee.email !== email) {
+      updateData.email = email
+    }
+    
 
     fetch('http://localhost:3001/employees', {
       headers: { "Content-Type": "application/json; charset=utf-8" },
       method: 'PUT',
-      body: JSON.stringify({firstName,lastName,job,email})
+      body: JSON.stringify(updateData)
     })
     .then(this.handleErrors)
     .then(response => this.setState({
@@ -91,6 +111,15 @@ export default class App extends Component {
     .catch(error => console.log(error) );
   }
 
+  deleteEmployee(employee) {
+    fetch(`http://localhost:3001/employees/${employee.id}`, { 
+      method: 'DELETE' 
+    })
+    .then(this.handleErrors)
+    .then(response => this.setState({staleData: true}))
+    .catch(error => console.log(error) );
+  }
+
   handleClick(btnName) {
     this.setState({[`${btnName}Clicked`]: true})
   }
@@ -108,6 +137,7 @@ export default class App extends Component {
                   <li key={employee.id}>
                       <Employee employee={employee}></Employee>
                       <EditEmployee employee={employee} editEmployeeBtnClicked={editEmployeeBtnClicked} handleClick={this.handleClick} editEmployee={() => this.editEmployee(employee)}></EditEmployee>
+                      <button onClick={() => this.deleteEmployee(employee)}>Delete Employee</button>
                   </li>
               )
           })}
