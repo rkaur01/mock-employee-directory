@@ -16,7 +16,6 @@ export default class App extends Component {
       editEmployeeBtnClicked: false
     };
 
-    //@TODO: pass these to appropriate child components so they can trigger state change here
     this.editEmployee = this.editEmployee.bind(this);
     this.addEmployee = this.addEmployee.bind(this);
     this.deleteEmployee = this.deleteEmployee.bind(this);
@@ -24,7 +23,6 @@ export default class App extends Component {
   }
   
   fetchData() {
-    // fetch employees and set to state.employees
     fetch('http://localhost:3001/employees')
     .then(this.handleErrors)
     .then(response => response.json())
@@ -56,7 +54,7 @@ export default class App extends Component {
     }
   }
 
-  //@TODO: make edit and add DRY, differences are only in method, state btnClicked, and json passed in
+  //@TODO: make edit and add DRY if possible
   //@TODO: complete method after developing form, may need onChange if using default val
   editEmployee(oldEmployee, updatedEmployee) {
     let firstName = updatedEmployee.firstName.value,
